@@ -1,15 +1,13 @@
 import React from 'react';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface ITooltipProps
-	extends React.DetailedHTMLProps<
-		React.HTMLAttributes<HTMLDivElement>,
-		HTMLDivElement
-	> {}
+type ITooltipProps = React.DetailedHTMLProps<
+	React.HTMLAttributes<HTMLDivElement>,
+	HTMLDivElement
+>;
 
-interface ITooltipPosition {
+interface ITooltipStyles {
 	top: number;
 	left: number;
 }
 
-export type { ITooltipProps, ITooltipPosition };
+export type { ITooltipProps, ITooltipStyles };

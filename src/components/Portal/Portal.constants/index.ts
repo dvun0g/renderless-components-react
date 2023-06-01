@@ -1,3 +1,3 @@
-const portalRoot = document.getElementById('portal');
+const portalRoot = document.getElementById('root-portals');
 
 export { portalRoot };
