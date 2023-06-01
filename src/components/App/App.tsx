@@ -1,5 +1,11 @@
+import { Tooltip } from '../Tooltip/Tooltip';
+
 const App = function () {
-	return <div></div>;
+	return (
+		<Tooltip>
+			<button>Button 1</button>
+		</Tooltip>
+	);
 };
 
 export { App };
