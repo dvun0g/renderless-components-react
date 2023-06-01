@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { Portal } from '../Portal/Portal';
-
-import type { ITooltipProps, ITooltipPosition } from './Tooltip.typings';
-import { TOP_SPACE, initialTooltipPosition } from './Tooltip.constants';
+import type { ITooltipProps, ITooltipStyles } from './Tooltip.typings';
+import { TOP_SPACE, INITIAL_TOOLTIP_STYLES } from './Tooltip.constants';
+import { TooltipOverlay } from './Tooltip.components/TooltipOverlay/TooltipOverlay';
 
 const Tooltip = function (props: ITooltipProps) {
 	const [isActive, setActive] = React.useState<boolean>(false);
-	const [positionTooltip, setPositionTooltip] =
-		React.useState<ITooltipPosition>(initialTooltipPosition);
+	const [stylesTooltip, setStylesTooltip] = React.useState<ITooltipStyles>(
+		INITIAL_TOOLTIP_STYLES
+	);
 	const tooltipWrapperRef = React.useRef<null | HTMLDivElement>(null);
 	const tooltipRef = React.useRef<null | HTMLSpanElement>(null);
 
@@ -24,13 +24,14 @@ const Tooltip = function (props: ITooltipProps) {
 		const tooltipWrapperRect =
 			tooltipWrapperElement.getBoundingClientRect();
 
-		setPositionTooltip({
+		setStylesTooltip((prev) => ({
+			...prev,
 			top: tooltipWrapperRect.top - tooltipRect.height - TOP_SPACE,
 			left:
 				tooltipWrapperRect.left +
 				tooltipWrapperRect.width / 2 -
 				tooltipRect.width / 2,
-		});
+		}));
 	}, [isActive]);
 
 	if (!props.children) {
@@ -51,20 +52,11 @@ const Tooltip = function (props: ITooltipProps) {
 			onMouseEnter={handleOnMouseEnter}
 			onMouseLeave={handleOnMouseLeave}
 		>
-			{isActive ? (
-				<Portal>
-					<span
-						ref={tooltipRef}
-						className="tooltip"
-						style={{
-							top: positionTooltip.top,
-							left: positionTooltip.left,
-						}}
-					>
-						Tooltip
-					</span>
-				</Portal>
-			) : null}
+			<TooltipOverlay
+				isActive={isActive}
+				style={stylesTooltip}
+				ref={tooltipRef}
+			/>
 			{props.children}
 		</div>
 	);

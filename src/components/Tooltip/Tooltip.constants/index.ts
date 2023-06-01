@@ -1,10 +1,10 @@
-import type { ITooltipPosition } from '../Tooltip.typings';
+import type { ITooltipStyles } from '../Tooltip.typings';
 
-const initialTooltipPosition: ITooltipPosition = {
+const INITIAL_TOOLTIP_STYLES: ITooltipStyles = {
 	top: 0,
 	left: 0,
 };
 
 const TOP_SPACE = 5;
 
-export { initialTooltipPosition, TOP_SPACE };
+export { INITIAL_TOOLTIP_STYLES, TOP_SPACE };
