@@ -5,9 +5,11 @@ type ITooltipProps = React.DetailedHTMLProps<
 	HTMLDivElement
 >;
 
-interface ITooltipStyles {
+interface ITooltipStylesObject {
 	top: number;
 	left: number;
 }
+
+type ITooltipStyles = ITooltipStylesObject | undefined;
 
 export type { ITooltipProps, ITooltipStyles };

@@ -4,7 +4,11 @@ import type { ITooltipProps, ITooltipStyles } from './Tooltip.typings';
 import { TOP_SPACE } from './Tooltip.constants';
 import { TooltipOverlay } from './Tooltip.components/TooltipOverlay/TooltipOverlay';
 
-const Tooltip = function (props: ITooltipProps) {
+interface ITooltipReactCloneProps extends ITooltipProps {
+	children: React.ReactElement;
+}
+
+const TooltipReactClone = function (props: ITooltipReactCloneProps) {
 	const [isVisible, setVisible] = React.useState<boolean>(false);
 	const [stylesTooltip, setStylesTooltip] =
 		React.useState<ITooltipStyles>(undefined);
@@ -45,20 +49,19 @@ const Tooltip = function (props: ITooltipProps) {
 	};
 
 	return (
-		<div
-			ref={tooltipWrapperRef}
-			className={props.className}
-			onMouseEnter={handleOnMouseEnter}
-			onMouseLeave={handleOnMouseLeave}
-		>
+		<>
+			{React.cloneElement(props.children, {
+				onMouseEnter: handleOnMouseEnter,
+				onMouseLeave: handleOnMouseLeave,
+				ref: tooltipWrapperRef,
+			})}
 			<TooltipOverlay
 				isVisible={isVisible}
 				style={stylesTooltip}
 				ref={tooltipRef}
 			/>
-			{props.children}
-		</div>
+		</>
 	);
 };
 
-export { Tooltip };
+export { TooltipReactClone };

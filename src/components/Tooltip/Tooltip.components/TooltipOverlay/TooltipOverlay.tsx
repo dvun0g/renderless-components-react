@@ -9,14 +9,14 @@ import styles from './TooltipOverlay.module.scss';
 const TooltipOverlay = React.forwardRef<
 	null | HTMLSpanElement,
 	ITooltipOverlayProps
->(function (props, ref) {
-	if (!props.isActive) {
+>(function ({ isVisible, ...restProps }, ref) {
+	if (!isVisible) {
 		return null;
 	}
 
 	return (
 		<Portal>
-			<span ref={ref} className={styles.tooltip} {...props}>
+			<span ref={ref} className={styles.tooltip} {...restProps}>
 				Tooltip
 			</span>
 		</Portal>
