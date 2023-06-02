@@ -5,11 +5,29 @@ type ITooltipProps = React.DetailedHTMLProps<
 	HTMLDivElement
 >;
 
-interface ITooltipStylesObject {
+interface ITooltipReactCloneProps extends ITooltipProps {
+	children: React.ReactElement;
+}
+
+interface ITooltipRenderProps {
+	children: (
+		props: React.DetailedHTMLProps<
+			React.ButtonHTMLAttributes<HTMLButtonElement>,
+			HTMLButtonElement
+		>
+	) => React.ReactElement;
+}
+
+interface ITooltipStyles {
 	top: number;
 	left: number;
 }
 
-type ITooltipStyles = ITooltipStylesObject | undefined;
+type ITooltipStylesState = ITooltipStyles | undefined;
 
-export type { ITooltipProps, ITooltipStyles };
+export type {
+	ITooltipProps,
+	ITooltipReactCloneProps,
+	ITooltipRenderProps,
+	ITooltipStylesState,
+};

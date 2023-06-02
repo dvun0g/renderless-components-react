@@ -1,17 +1,16 @@
 import React from 'react';
 
-import type { ITooltipProps, ITooltipStyles } from './Tooltip.typings';
+import type {
+	ITooltipReactCloneProps,
+	ITooltipStylesState,
+} from './Tooltip.typings';
 import { TOP_SPACE } from './Tooltip.constants';
 import { TooltipOverlay } from './Tooltip.components/TooltipOverlay/TooltipOverlay';
-
-interface ITooltipReactCloneProps extends ITooltipProps {
-	children: React.ReactElement;
-}
 
 const TooltipReactClone = function (props: ITooltipReactCloneProps) {
 	const [isVisible, setVisible] = React.useState<boolean>(false);
 	const [stylesTooltip, setStylesTooltip] =
-		React.useState<ITooltipStyles>(undefined);
+		React.useState<ITooltipStylesState>(undefined);
 	const tooltipWrapperRef = React.useRef<null | HTMLDivElement>(null);
 	const tooltipRef = React.useRef<null | HTMLSpanElement>(null);
 
@@ -19,7 +18,8 @@ const TooltipReactClone = function (props: ITooltipReactCloneProps) {
 		const tooltipWrapperElement = tooltipWrapperRef.current;
 		const tooltipElement = tooltipRef.current;
 
-		if (!tooltipWrapperElement || !tooltipElement) {
+		const areNotExistsElements = !tooltipWrapperElement || !tooltipElement;
+		if (areNotExistsElements) {
 			return;
 		}
 
@@ -27,14 +27,16 @@ const TooltipReactClone = function (props: ITooltipReactCloneProps) {
 		const tooltipWrapperRect =
 			tooltipWrapperElement.getBoundingClientRect();
 
-		setStylesTooltip((prev) => ({
-			...prev,
+		const newStylesTooltip = {
+			...stylesTooltip,
 			top: tooltipWrapperRect.top - tooltipRect.height - TOP_SPACE,
 			left:
 				tooltipWrapperRect.left +
 				tooltipWrapperRect.width / 2 -
 				tooltipRect.width / 2,
-		}));
+		};
+		setStylesTooltip(newStylesTooltip);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isVisible]);
 
 	if (!props.children) {
