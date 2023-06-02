@@ -1,14 +1,16 @@
 import React from 'react';
 
-import type { ITooltipStyles } from '../../../Tooltip.typings';
+import type { ITooltipStylesState } from '../../../Tooltip.typings';
 
 interface ITooltipOverlayProps
 	extends React.DetailedHTMLProps<
 		React.HTMLAttributes<HTMLSpanElement>,
 		HTMLSpanElement
 	> {
-	style: ITooltipStyles;
-    isVisible: boolean;
+	style: ITooltipStylesState;
+	isVisible: boolean;
 }
 
-export type { ITooltipOverlayProps };
+type ITooltipRef = null | HTMLSpanElement;
+
+export type { ITooltipOverlayProps, ITooltipRef };
