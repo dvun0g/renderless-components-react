@@ -8,7 +8,7 @@ interface ITooltipOverlayProps
 		HTMLSpanElement
 	> {
 	style: ITooltipStyles;
-    isActive: boolean;
+    isVisible: boolean;
 }
 
 export type { ITooltipOverlayProps };

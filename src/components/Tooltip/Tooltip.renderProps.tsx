@@ -1,15 +1,24 @@
 import React from 'react';
 
-import type { ITooltipProps, ITooltipStyles } from './Tooltip.typings';
+import type { ITooltipStyles } from './Tooltip.typings';
 import { TOP_SPACE } from './Tooltip.constants';
 import { TooltipOverlay } from './Tooltip.components/TooltipOverlay/TooltipOverlay';
 
-const Tooltip = function (props: ITooltipProps) {
+type ITooltipRenderChildProps = React.DetailedHTMLProps<
+	React.ButtonHTMLAttributes<HTMLButtonElement>,
+	HTMLButtonElement
+>;
+
+interface ITooltipRenderProps {
+	children: (props: ITooltipRenderChildProps) => React.ReactElement;
+}
+
+const TooltipRenderProps = function (props: ITooltipRenderProps) {
 	const [isVisible, setVisible] = React.useState<boolean>(false);
 	const [stylesTooltip, setStylesTooltip] =
 		React.useState<ITooltipStyles>(undefined);
-	const tooltipWrapperRef = React.useRef<null | HTMLDivElement>(null);
-	const tooltipRef = React.useRef<null | HTMLSpanElement>(null);
+	const tooltipWrapperRef = React.useRef<null | HTMLButtonElement>(null);
+	const tooltipRef = React.useRef<null | HTMLDivElement>(null);
 
 	React.useLayoutEffect(() => {
 		const tooltipWrapperElement = tooltipWrapperRef.current;
@@ -45,20 +54,19 @@ const Tooltip = function (props: ITooltipProps) {
 	};
 
 	return (
-		<div
-			ref={tooltipWrapperRef}
-			className={props.className}
-			onMouseEnter={handleOnMouseEnter}
-			onMouseLeave={handleOnMouseLeave}
-		>
+		<>
+			{props.children({
+				onMouseEnter: handleOnMouseEnter,
+				onMouseLeave: handleOnMouseLeave,
+				ref: tooltipWrapperRef,
+			})}
 			<TooltipOverlay
 				isVisible={isVisible}
 				style={stylesTooltip}
 				ref={tooltipRef}
 			/>
-			{props.children}
-		</div>
+		</>
 	);
 };
 
-export { Tooltip };
+export { TooltipRenderProps };

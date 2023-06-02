@@ -1,4 +1,4 @@
-import { Tooltip } from '../Tooltip/Tooltip';
+import { Tooltip, TooltipReactClone, TooltipRenderProps } from '../Tooltip';
 
 import styles from './App.module.scss';
 
@@ -6,8 +6,14 @@ const App = function () {
 	return (
 		<div className={styles.wrapper}>
 			<Tooltip>
-				<button>Button 1</button>
+				<button>Default</button>
 			</Tooltip>
+			<TooltipReactClone>
+				<button>React.cloneElement</button>
+			</TooltipReactClone>
+			<TooltipRenderProps>
+				{(props) => <button {...props}>RenderProps</button>}
+			</TooltipRenderProps>
 		</div>
 	);
 };
